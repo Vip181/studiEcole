@@ -1,0 +1,128 @@
+/* 🌈 Arrière-plan global */
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  padding-top: 60px; /* espace au-dessus du formulaire */
+  padding-bottom: 60px; /* espace en bas */
+  color: #333;
+}
+
+/* 🧾 Titre principal */
+h1 {
+  text-align: center;
+  color: #fff;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 40px;
+  font-weight: 700;
+}
+
+/* 🪄 Carte du formulaire */
+form {
+  background-color: #ffffff;
+  padding: 2rem 2.5rem;
+  border-radius: 1.2rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+  animation: fadeIn 0.7s ease-in-out;
+}
+
+/* ✨ Animation d’apparition */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 🏷️ Labels */
+label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  color: #444;
+  text-align: center; /* centrage des labels */
+}
+
+/* ✍️ Champs de saisie */
+input[type="text"],
+input[type="password"] {
+  width: 85%; /* champ plus étroit, bien centré */
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  text-align: center; /* texte centré dans le champ */
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-color: #2575fc;
+  outline: none;
+  background-color: #fff;
+  box-shadow: 0 0 8px rgba(37, 117, 252, 0.35);
+}
+
+/* 💎 Bouton moderne et stylé */
+input[type="submit"] {
+  width: 85%;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(90deg, #6a11cb, #2575fc);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(37, 117, 252, 0.4);
+  margin-top: 0.8rem;
+  letter-spacing: 0.5px;
+}
+
+/* Effet au survol */
+input[type="submit"]:hover {
+  background: linear-gradient(90deg, #7b27e0, #3c86ff);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 117, 252, 0.5);
+}
+
+/* Effet lors du clic */
+input[type="submit"]:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 📱 Responsive (mobile et tablette) */
+@media (max-width: 600px) {
+  body {
+    padding-top: 40px;
+  }
+
+  form {
+    max-width: 90%;
+    padding: 1.5rem 2rem;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+    margin-bottom: 30px;
+  }
+
+  input[type="text"],
+  input[type="password"],
+  input[type="submit"] {
+    width: 90%;
+    font-size: 0.9rem;
+  }
+}
