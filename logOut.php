@@ -8,13 +8,15 @@
 </head>
 <body>
  
-
   <form method="POST" action="traitement.php">
     <label>Nom :</label>
     <input type="text" name="nom" required>
 
     <label>Prénom :</label>
     <input type="text" name="prenom" required>
+
+    <label>Email :</label>
+    <input type="email" name="email" placeholder="exemple@domaine.com" required>
 
     <label>Pseudo :</label>
     <input type="text" name="pseudo" required>
@@ -27,5 +29,7 @@
 
     <input type="submit" name="ok" value="Créer le compte">
   </form>
+
 </body>
 </html>
+

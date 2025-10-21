@@ -5,39 +5,56 @@ if (isset($_POST['ok'])) {
     // Récupération des données du formulaire
     $nom = $_POST['nom'];
     $prenom = $_POST['prenom'];
+    $email = $_POST['email'];
     $pseudo = $_POST['pseudo'];
     $mdp = $_POST['mdp'];
     $numSecu = $_POST['num_secu'];
 
-    // (facultatif) affichage de test
-    //echo "Nom : " . htmlspecialchars($nom) . "<br>";
-   // echo "Prénom : " . htmlspecialchars($prenom) . "<br>";
-   // echo "Pseudo : " . htmlspecialchars($pseudo) . "<br>";
-    //echo "Numéro de sécurité sociale : " . htmlspecialchars($numSecu) . "<br>";
-    //echo "Mot de passe : " . htmlspecialchars($mdp) . "<br>";
-
     try {
+        // Vérifier si la table "utilisateur" existe
+        $tableCheck = $bdd->query("SHOW TABLES LIKE 'utilisateur'");
+        if ($tableCheck->rowCount() == 0) {
+            // Création de la table si elle n'existe pas
+            $createTableSQL = "
+                CREATE TABLE utilisateur (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    pseudo VARCHAR(100) NOT NULL UNIQUE,
+                    nom VARCHAR(100) NOT NULL,
+                    prenom VARCHAR(100) NOT NULL,
+                    email VARCHAR(150) NOT NULL UNIQUE,
+                    mot_de_passe VARCHAR(255) NOT NULL,
+                    numero_securite_sociale VARCHAR(15) NOT NULL UNIQUE,
+                    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            ";
+            $bdd->exec($createTableSQL);
+            echo "<p style='color:blue;'>ℹ️ Table <b>utilisateur</b> créée automatiquement.</p>";
+        }
+
         // Préparation de la requête d’insertion
         $requete = $bdd->prepare("
-            INSERT INTO utilisateur (id, pseudo, nom, prenom, mot_de_passe, numero_securite_sociale)
-            VALUES (NULL, :pseudo, :nom, :prenom, :mdp, :numSecu)
+            INSERT INTO utilisateur (pseudo, nom, prenom, email, mot_de_passe, numero_securite_sociale)
+            VALUES (:pseudo, :nom, :prenom, :email, :mdp, :numSecu)
         ");
 
-        // Exécution de la requête avec les données
+        // Exécution de la requête avec les données sécurisées
         $requete->execute([
             ':pseudo' => $pseudo,
             ':nom' => $nom,
             ':prenom' => $prenom,
+            ':email' => $email,
             ':mdp' => password_hash($mdp, PASSWORD_DEFAULT),
             ':numSecu' => $numSecu
         ]);
-    echo "<p style='color:green;'>✅ Données enregistrées avec succès !</p>";
+
+        echo "<p style='color:green;'>✅ Données enregistrées avec succès !</p>";
+
     } catch (PDOException $e) {
         echo "<p style='color:red;'>❌ Erreur lors de l’enregistrement : " . $e->getMessage() . "</p>";
     }
-      retourPagePrincipale('index.php', 3);
+
+    retourPagePrincipale('index.php', 3);
 }
-     
 
 
 function retourPagePrincipale($url = 'index.php', $delai = 3) {
@@ -78,7 +95,4 @@ function retourPagePrincipale($url = 'index.php', $delai = 3) {
     </script>
     ";
 }
-    
-
-
 ?>
