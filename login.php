@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  <form method="POST" action="traitementConnexion.php">
+  <form method="POST" action="login.php">
     <label for="email">Email :</label>
     <input type="email" id="email" name="email" placeholder="Entrez votre email" required>
 
@@ -21,7 +21,9 @@
 
   <?php
 require_once 'basseDedonnee.php';
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email']);
