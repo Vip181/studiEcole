@@ -54,7 +54,7 @@ if (isset($_POST['ok'])) {
             '>
                 <h2>⚠️ Utilisateur déjà existant !</h2>
                 <p>Le pseudo, l’adresse e-mail ou le numéro de sécurité sociale est déjà utilisé.</p>
-                <button onclick=\"window.location.href='LogOut.php'\" 
+                <button onclick=\"window.location.href='inscription.php'\" 
                         style='
                             background-color:#3498db;
                             color:white;

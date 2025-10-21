@@ -20,7 +20,7 @@
     <main>
         <h1>Bienvenue sur mon site !</h1>
         <p>Cliquez sur le bouton ci-dessous pour accéder à la page d'inscription.</p>
-        <form action="logOut.php" method="get">
+        <form action="inscription.php" method="get">
             <button type="submit">Aller à la page d'inscription</button>
         </form>
     </main>
