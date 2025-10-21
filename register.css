@@ -8,8 +8,8 @@ body {
   align-items: center;
   justify-content: flex-start;
   margin: 0;
-  padding-top: 60px; /* espace au-dessus du formulaire */
-  padding-bottom: 60px; /* espace en bas */
+  padding-top: 60px;
+  padding-bottom: 60px;
   color: #333;
 }
 
@@ -48,25 +48,43 @@ label {
   margin-bottom: 0.4rem;
   font-weight: 600;
   color: #444;
-  text-align: center; /* centrage des labels */
+  text-align: center;
 }
 
-/* ✍️ Champs de saisie */
+/* ✍️ Champs de saisie (tous identiques) */
 input[type="text"],
-input[type="password"] {
-  width: 85%; /* champ plus étroit, bien centré */
+input[type="password"],
+input[type="email"],
+input[type="number"] {
+  width: 85%;
   padding: 0.7rem;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
   margin-bottom: 1rem;
   font-size: 0.95rem;
-  text-align: center; /* texte centré dans le champ */
+  text-align: center;
   background-color: #f9f9f9;
   transition: all 0.3s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  box-sizing: border-box;
 }
 
+/* ✅ Correction spéciale pour les champs email (supprime tout style navigateur) */
+input[type="email"] {
+  background-color: #f9f9f9 !important;
+  border: 1px solid #ccc !important;
+  color: #000;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* 🎯 Effet focus */
 input[type="text"]:focus,
-input[type="password"]:focus {
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus {
   border-color: #2575fc;
   outline: none;
   background-color: #fff;
@@ -121,6 +139,8 @@ input[type="submit"]:active {
 
   input[type="text"],
   input[type="password"],
+  input[type="email"],
+  input[type="number"],
   input[type="submit"] {
     width: 90%;
     font-size: 0.9rem;
