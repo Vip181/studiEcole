@@ -10,11 +10,11 @@ if (isset($_POST['ok'])) {
     $numSecu = $_POST['num_secu'];
 
     // (facultatif) affichage de test
-    echo "Nom : " . htmlspecialchars($nom) . "<br>";
-    echo "Prénom : " . htmlspecialchars($prenom) . "<br>";
-    echo "Pseudo : " . htmlspecialchars($pseudo) . "<br>";
-    echo "Numéro de sécurité sociale : " . htmlspecialchars($numSecu) . "<br>";
-    echo "Mot de passe : " . htmlspecialchars($mdp) . "<br>";
+    //echo "Nom : " . htmlspecialchars($nom) . "<br>";
+   // echo "Prénom : " . htmlspecialchars($prenom) . "<br>";
+   // echo "Pseudo : " . htmlspecialchars($pseudo) . "<br>";
+    //echo "Numéro de sécurité sociale : " . htmlspecialchars($numSecu) . "<br>";
+    //echo "Mot de passe : " . htmlspecialchars($mdp) . "<br>";
 
     try {
         // Préparation de la requête d’insertion
@@ -31,10 +31,54 @@ if (isset($_POST['ok'])) {
             ':mdp' => password_hash($mdp, PASSWORD_DEFAULT),
             ':numSecu' => $numSecu
         ]);
-
-        echo "<p style='color:green;'>✅ Données enregistrées avec succès !</p>";
+    echo "<p style='color:green;'>✅ Données enregistrées avec succès !</p>";
     } catch (PDOException $e) {
         echo "<p style='color:red;'>❌ Erreur lors de l’enregistrement : " . $e->getMessage() . "</p>";
     }
+      retourPagePrincipale('index.php', 3);
 }
+     
+
+
+function retourPagePrincipale($url = 'index.php', $delai = 3) {
+    echo "
+    <div style='
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        font-family: Arial, sans-serif;
+    '>
+        <div style='text-align: center;'>
+            <div class='loader' style=\"
+                border: 6px solid #f3f3f3;
+                border-top: 6px solid #3498db;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                animation: spin 1s linear infinite;
+                margin: 0 auto 20px auto;
+            \"></div>
+            <p>Redirection en cours... Veuillez patienter.</p>
+        </div>
+    </div>
+
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+
+    <script>
+        setTimeout(function() {
+            window.location.href = '$url';
+        }, " . ($delai * 1000) . ");
+    </script>
+    ";
+}
+    
+
+
 ?>
