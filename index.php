@@ -19,9 +19,18 @@
 
     <main>
         <h1>Bienvenue sur mon site !</h1>
-        <p>Cliquez sur le bouton ci-dessous pour accéder à la page d'inscription.</p>
-        <form action="inscription.php" method="get">
-            <button type="submit">Aller à la page d'inscription</button>
+        <p>Cliquez sur un des boutons ci-dessous pour accéder à la page d'inscription.</p>
+        
+        <!-- Bouton inscription utilisateur -->
+        <form action="inscription.php" method="get" id="bt-utilisteur">
+            <button type="submit">Créer un compte utilisateur</button>
+        </form>
+<p> 
+
+</p>
+        <!-- Bouton inscription médecin -->
+        <form action="inscription_medecin.php" method="get" id="btn-medecin">
+            <button type="submit">Créer un compte médecin</button>
         </form>
     </main>
 </body>
