@@ -8,44 +8,60 @@
 </head>
 <body>
 
-  <form method="POST" action="login.php">
+  <h2 style="text-align:center;">🔐 Connexion</h2>
+
+  <form method="POST" action="login.php" style="max-width:400px;margin:auto;">
+    <label for="type_compte">Type de compte :</label>
+    <select name="type_compte" id="type_compte" required>
+      <option value="utilisateur">Utilisateur (Patient)</option>
+      <option value="medecin">Médecin</option>
+    </select><br><br>
+
     <label for="email">Email :</label>
-    <input type="email" id="email" name="email" placeholder="Entrez votre email" required>
+    <input type="email" id="email" name="email" placeholder="Entrez votre email" required><br><br>
 
     <label for="mdp">Mot de passe :</label>
-    <input type="password" id="mdp" name="mdp" placeholder="Entrez votre mot de passe" required>
+    <input type="password" id="mdp" name="mdp" placeholder="Entrez votre mot de passe" required><br><br>
 
-    <input type="submit" value="Se connecter">
+    <input type="submit" name="ok" value="Se connecter">
   </form>
 
-
   <?php
-require_once 'basseDedonnee.php';
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+  require_once 'basseDedonnee.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email']);
-    $mdp = $_POST['mdp'];
 
-    $requete = $bdd->prepare("SELECT * FROM utilisateur WHERE email = :email");
-    $requete->execute([':email' => $email]);
-    $user = $requete->fetch(PDO::FETCH_ASSOC);
+  if (isset($_POST['ok'])) {
+      $type = $_POST['type_compte'];
+      $email = trim($_POST['email']);
+      $mdp = $_POST['mdp'];
 
-    if ($user && password_verify($mdp, $user['mot_de_passe'])) {
-        // Enregistrer les infos de session
-        $_SESSION['utilisateur_id'] = $user['id'];
-        $_SESSION['nom'] = $user['nom'];
-        $_SESSION['prenom'] = $user['prenom'];
-        header('Location: utilisateur.php');
-        exit;
-    } else {
-        echo "<p style='color:red; text-align:center;'>❌ Email ou mot de passe incorrect.</p>";
-        echo "<p style='text-align:center;'><a href='login.php'>🔙 Retour</a></p>";
-    }
-}
-?>
+      if ($type === 'utilisateur') {
+          $req = $bdd->prepare("SELECT * FROM utilisateur WHERE email = :email");
+      } else {
+          $req = $bdd->prepare("SELECT * FROM medecin WHERE email = :email");
+      }
+
+      $req->execute([':email' => $email]);
+      $user = $req->fetch(PDO::FETCH_ASSOC);
+
+      if ($user && password_verify($mdp, $user['mot_de_passe'])) {
+          if ($type === 'utilisateur') {
+              $_SESSION['utilisateur_id'] = $user['id'];
+              $_SESSION['nom'] = $user['nom'];
+              $_SESSION['prenom'] = $user['prenom'];
+              header('Location: utilisateur.php');
+          } else {
+              $_SESSION['medecin_id'] = $user['id'];
+              $_SESSION['medecin_nom'] = $user['nom'];
+              $_SESSION['medecin_prenom'] = $user['prenom'];
+              $_SESSION['NUMERO_rpps'] = $user['NUMERO_rpps'];
+              header('Location: medecin.php');
+          }
+          exit;
+      } else {
+          echo "<p style='color:red; text-align:center;'>❌ Email ou mot de passe incorrect.</p>";
+      }
+  }
+  ?>
 </body>
-
 </html>
