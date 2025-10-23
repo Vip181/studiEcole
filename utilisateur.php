@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require_once 'basseDedonnee.php';
 
 // --- 1️⃣ Création automatique de la table rendezvous ---
@@ -185,6 +185,11 @@ function getLogo($specialite) {
 function choisirMedecin(id) {
     document.getElementById('medecin_id').value = id;
     document.getElementById('formChoixMedecin').submit();
+
+    // Rechargement automatique après soumission
+    setTimeout(() => {
+        window.location.reload();
+    }, 200);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -208,10 +213,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
+            // Supprimer les sélections précédentes
+            document.querySelectorAll('.fc-daygrid-day').forEach(day => {
+                day.classList.remove('selected-day');
+            });
+
+            // Ajouter la sélection sur le jour cliqué
+            info.dayEl.classList.add('selected-day');
+
             if (confirm("Voulez-vous fixer un rendez-vous avec " + 
                 "Dr. " + medecinChoisi.prenom + " " + medecinChoisi.nom + 
                 " (" + medecinChoisi.specialite + ") le " + info.dateStr + " ?")) {
-                
+
                 fetch("", {
                     method: "POST",
                     headers: { "Content-Type": "application/x-www-form-urlencoded" },
