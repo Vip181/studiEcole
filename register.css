@@ -146,3 +146,50 @@ input[type="submit"]:active {
     font-size: 0.9rem;
   }
 }
+input:focus,
+select:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 6px rgba(59, 130, 246, 0.4);
+  outline: none;
+  background-color: #fff;
+}
+
+/* --- MENU DÉROULANT --- */
+select {
+  appearance: none;
+  background: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='14' height='14' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23666' d='M7 10l5-5H2z'/%3E%3C/svg%3E")
+    no-repeat right 12px center/12px;
+}
+
+/* --- BOUTON --- */
+button[type="submit"],
+input[type="submit"] {
+  width: 100%;
+  background-color: #3b82f6;
+  color: white;
+  font-weight: bold;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.1s ease;
+}
+
+button[type="submit"]:hover,
+input[type="submit"]:hover {
+  background-color: #2563eb;
+  transform: translateY(-2px);
+}
+
+/* --- BOUTON EN FOCUS --- */
+button[type="submit"]:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.5);
+}
+
+/* --- PETITS DÉTAILS --- */
+::placeholder {
+  color: #9ca3af;
+}

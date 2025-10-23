@@ -158,12 +158,3 @@ button:hover {
     background-color: #005fa3;
 }
 
-#btn-medecin {
-  margin: 30px 0;
-    background-color: #0077cc;
-    color: white;
-    padding: 30px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
