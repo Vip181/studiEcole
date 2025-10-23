@@ -108,3 +108,84 @@ button {
       text-align: center;
       margin-top: 30px;
     }
+    .medecin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.medecin-card {
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  text-align: center;
+  padding: 15px;
+  transition: all 0.3s ease;
+  background: #f9fafb;
+}
+
+.medecin-card:hover {
+  transform: translateY(-3px);
+  border-color: #3b82f6;
+}
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.calendrier, .documents, .choix-medecin {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.medecin-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.medecin-card {
+    background-color: #e0f7fa;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    width: 150px;
+    transition: all 0.2s ease-in-out;
+}
+
+.medecin-card.selection-active {
+    border: 2px solid #00838f;
+    transform: scale(1.05);
+}
+
+.medecin-card .logo {
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+
+.btn-choisir {
+    margin-top: 5px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #00838f;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-choisir:hover {
+    background-color: #006064;
+}
+
+/* Calendrier */
+.fc .fc-daygrid-day.selected-day {
+    transform: scale(1.05);
+    background-color: #e0f7fa !important;
+    z-index: 10;
+    transition: all 0.2s ease-in-out;
+}
