@@ -1,8 +1,8 @@
 <?php
-
+session_start();
 require_once 'basseDedonnee.php';
 
-// --- Création automatique de la table rendezvous si elle n'existe pas ---
+// --- 1️⃣ Création automatique de la table rendezvous ---
 $bdd->exec("
     CREATE TABLE IF NOT EXISTS rendezvous (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -16,7 +16,13 @@ $bdd->exec("
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ");
 
-// Vérifie si l'utilisateur est connecté
+// --- 2️⃣ Vérifie si la colonne medecin_id existe dans utilisateur ---
+$colonneExiste = $bdd->query("SHOW COLUMNS FROM utilisateur LIKE 'medecin_id'")->rowCount();
+if ($colonneExiste === 0) {
+    $bdd->exec("ALTER TABLE utilisateur ADD COLUMN medecin_id INT NULL");
+}
+
+// --- Vérifie si l'utilisateur est connecté ---
 if (!isset($_SESSION['utilisateur_id'])) {
     header('Location: login.php');
     exit;
@@ -26,6 +32,7 @@ $id = $_SESSION['utilisateur_id'];
 $nom = htmlspecialchars($_SESSION['nom']);
 $prenom = htmlspecialchars($_SESSION['prenom']);
 
+// --- Création du dossier utilisateur ---
 $dossierUser = "dossier_utilisateurs/$id";
 if (!is_dir($dossierUser)) {
     mkdir($dossierUser, 0777, true);
@@ -33,7 +40,7 @@ if (!is_dir($dossierUser)) {
 
 $message = "";
 
-// Choix du médecin
+// --- Choix du médecin ---
 if (isset($_POST['choisir_medecin'])) {
     $medecin_id = intval($_POST['medecin_id']);
     $update = $bdd->prepare("UPDATE utilisateur SET medecin_id = :medecin_id WHERE id = :id");
@@ -42,10 +49,10 @@ if (isset($_POST['choisir_medecin'])) {
     $message = "✅ Médecin sélectionné avec succès ! Cliquez sur une date du calendrier pour fixer un rendez-vous.";
 }
 
-// Récupère les médecins
+// --- Récupère les médecins ---
 $medecins = $bdd->query("SELECT id, nom, prenom, specialite FROM medecin ORDER BY nom ASC")->fetchAll(PDO::FETCH_ASSOC);
 
-// Récupère le médecin choisi
+// --- Récupère le médecin choisi ---
 $medecinChoisi = null;
 if (isset($_SESSION['medecin_id'])) {
     $stmt = $bdd->prepare("SELECT * FROM medecin WHERE id = ?");
@@ -53,7 +60,7 @@ if (isset($_SESSION['medecin_id'])) {
     $medecinChoisi = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-// Ajout d’un rendez-vous via requête AJAX
+// --- Ajout d’un rendez-vous via requête AJAX ---
 if (isset($_POST['action']) && $_POST['action'] === 'ajouter_rdv') {
     $date_rdv = $_POST['date_rdv'];
     $medecin_id = $_SESSION['medecin_id'];
@@ -65,7 +72,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'ajouter_rdv') {
     exit;
 }
 
-// Charger les rendez-vous
+// --- Charger les rendez-vous ---
 $rdvs = $bdd->prepare("
     SELECT r.date_rdv, m.nom, m.prenom, m.specialite 
     FROM rendezvous r 
@@ -81,7 +88,7 @@ while ($row = $rdvs->fetch(PDO::FETCH_ASSOC)) {
     ];
 }
 
-// Logos des spécialités
+// --- Logos des spécialités ---
 function getLogo($specialite) {
     $logos = [
         'Cardiologue' => '❤️',
